@@ -40,7 +40,7 @@ To create a gradient with easing, follow these steps:
 3. Choose an easing function by name, like bg-easing-gradient-ease-in-out.
 
 ```html
-<div class="bg-easing-gradient-from-blue-500 bg-easing-gradient-to-green-400 bg-easing-gradient-ease-in-out">
+<div class="bg-easing-gradient-to-l bg-easing-gradient-from-blue-500 bg-easing-gradient-to-green-400 bg-easing-gradient-ease-in-out">
   <!-- Your content here -->
 </div>
 ```
