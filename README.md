@@ -1,7 +1,6 @@
 # UnoCSS Easing Gradient Preset
 
-T
-his is a custom preset for UnoCSS that allows you to create CSS gradients with easing functions. This preset provides utility classes to define gradients with custom easing and shape options. Gradients can be linear, radial or conic and support custom colour stops based on easing functions or Bézier curves.
+This is a custom preset for UnoCSS that allows you to create CSS gradients with easing functions. This preset provides utility classes to define gradients with custom easing and shape options. Gradients can be linear, radial or conic and support custom colour stops based on easing functions or Bézier curves.
 
 ## Features
 
@@ -13,13 +12,13 @@ his is a custom preset for UnoCSS that allows you to create CSS gradients with e
 ## Installation
 
 ```bash
-npm install unocss-preset-easing-gradient
+npm install -D unocss-preset-easing-gradient
 ```
 
 Add the preset to your UnoCSS configuration.
 
 ```ts
-import { presetEasingGradient } from 'path-to-your-preset'
+import { presetEasingGradient } from 'unocss-preset-easing-gradient'
 import { defineConfig } from 'unocss'
 
 export default defineConfig({
