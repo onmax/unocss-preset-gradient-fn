@@ -1,30 +1,14 @@
 import type { ParsedColorValue } from '@unocss/rule-utils'
 import type { Preset } from 'unocss'
 import { h, parseColor, positionMap } from '@unocss/preset-mini/utils'
-import { colorToString } from '@unocss/rule-utils'
 import { cubicBezier, easingFunctions } from './easing'
+import { generateGradientStops } from './gradients'
 
 const toKebabCase = (str: string) => str.replace(/([a-z])([A-Z])/g, '$1-$2').replace(/[\s_]+/g, '-').toLowerCase()
 const toCamelCase = (str: string) => str.replace(/[-_](.)/g, (_, char) => char.toUpperCase())
 
 const functionNames = Object.keys(easingFunctions).map(toKebabCase)
 const functionNamesPattern = functionNames.join('|') // Create pattern for regex
-
-// Generate gradient stops based on easing
-function generateGradientStops(easingFn: (t: number) => number, steps: number, color: ParsedColorValue) {
-  const stops: string[] = []
-
-  for (let i = 0; i <= steps; i++) {
-    const t = i / steps
-    const easedT = easingFn(t)
-    const opacity = 1 - easedT // Adjust opacity based on easing value
-    const position = `${(easedT * 100).toFixed(2)}%`
-    const colorStr = colorToString(color.cssColor!, opacity)
-    stops.push(`${colorStr} ${position}`)
-  }
-
-  return stops.join(', ')
-}
 
 export function presetEasingGradient(): Preset {
   let fromColor: ParsedColorValue
@@ -33,28 +17,28 @@ export function presetEasingGradient(): Preset {
   return {
     name: 'unocss-preset-easing-gradient',
     rules: [
-      [/^bg-easing-gradient-(.+)$/, () => ({}), {
-        autocomplete: ['bg-easing-gradient', `bg-easing-gradient-(${functionNamesPattern})`, 'bg-easing-gradient-(from|to)-$colors'],
+      [/^bg-gradient-fn-(.+)$/, () => ({}), {
+        autocomplete: ['bg-gradient-fn', `bg-gradient-fn-(${functionNamesPattern})`, 'bg-gradient-fn-(from|to)-$colors', 'bg-gradient-fn-steps-$number'],
       }],
-      [/^(?:bg-easing-gradient-)?from-(.+)$/, ([, color], { theme }) => {
+      [/^(?:bg-gradient-fn-)?from-(.+)$/, ([, color], { theme }) => {
         const parsedColor = parseColor(color!, theme)
         if (!parsedColor?.color)
           return
         fromColor = parsedColor
         return {}
       }],
-      [/^(?:bg-easing-gradient-)?to-(.+)$/, ([, color], { theme }) => {
+      [/^(?:bg-gradient-fn-)?to-(.+)$/, ([, color], { theme }) => {
         const parsedColor = parseColor(color!, theme)
         if (!parsedColor?.color)
           return
         toColor = parsedColor
         return {}
       }],
-      [/^(?:bg-easing-gradient-)?steps-(\d+)$/, ([, _steps]) => {
+      [/^(?:bg-gradient-fn-)?steps-(\d+)$/, ([, _steps]) => {
         steps = Number(_steps)
         return {}
       }],
-      [/^bg-easing-gradient-to-([rltb]{1,2})$/, ([, d]) => {
+      [/^(?:bg-gradient-fn-)?to-([rltb]{1,2})$/, ([, d]) => {
         if (!(d! in positionMap))
           return
         return {
@@ -62,8 +46,8 @@ export function presetEasingGradient(): Preset {
           '--un-easing-gradient': 'var(--un-easing-gradient-shape), var(--un-easing-gradient-stops)',
           'background-image': 'linear-gradient(var(--un-easing-gradient))',
         }
-      }, { autocomplete: `bg-easing-gradient-to-(${Object.keys(positionMap).filter(k => k.length <= 2 && Array.from(k).every(c => 'rltb'.includes(c))).join('|')})` }],
-      [/^(?:bg-easing-gradient-)?shape-(.+)$/, ([, d]) => {
+      }, { autocomplete: `bg-gradient-fn-to-(${Object.keys(positionMap).filter(k => k.length <= 2 && Array.from(k).every(c => 'rltb'.includes(c))).join('|')})` }],
+      [/^(?:bg-gradient-fn-)?shape-(.+)$/, ([, d]) => {
         const v = d! in positionMap ? `to ${positionMap[d!]}` : h.bracket(d!)
         if (v != null) {
           return {
@@ -71,46 +55,46 @@ export function presetEasingGradient(): Preset {
             '--un-easing-gradient': 'var(--un-easing-gradient-shape), var(--un-easing-gradient-stops)',
           }
         }
-      }, { autocomplete: ['bg-easing-gradient-shape', `bg-easing-gradient-shape-(${Object.keys(positionMap).join('|')})`, `shape-(${Object.keys(positionMap).join('|')})`] }],
-      [/^bg-easing-gradient-((?:repeating-)?(?:linear|radial|conic))$/, ([, s]) => ({
+      }, { autocomplete: ['bg-gradient-fn-shape', `bg-gradient-fn-shape-(${Object.keys(positionMap).join('|')})`, `shape-(${Object.keys(positionMap).join('|')})`] }],
+      [/^bg-gradient-fn-((?:repeating-)?(?:linear|radial|conic))$/, ([, s]) => ({
         'background-image': `${s}-gradient(var(--un-easing-gradient, var(--un-easing-gradient-stops, rgb(255 255 255 / 0))))`,
-      }), { autocomplete: ['bg-easing-gradient-repeating', 'bg-easing-gradient-(linear|radial|conic)', 'bg-easing-gradient-repeating-(linear|radial|conic)'] }],
+      }), { autocomplete: ['bg-gradient-fn-repeating', 'bg-gradient-fn-(linear|radial|conic)', 'bg-gradient-fn-repeating-(linear|radial|conic)'] }],
       [
-        new RegExp(`^(?:bg-easing-gradient-)?(${functionNamesPattern})$`),
+        new RegExp(`^(?:bg-gradient-fn-)?fn-(${functionNamesPattern})$`),
         ([, _functionName]) => {
           const functionName = toCamelCase(_functionName!) as keyof typeof easingFunctions
           const easingFn = easingFunctions[functionName]
           if (!fromColor) {
-            throw new Error(`Make sure to set \`bg-easing-gradient-from-$color\` before using \`bg-easing-gradient-$easingFunctions\``)
+            throw new Error(`Make sure to set \`bg-gradient-fn-from-$color\` before using \`bg-gradient-fn-$easingFunctions\``)
           }
           if (!toColor) {
-            throw new Error(`Make sure to set \`bg-easing-gradient-to-$color\` before using \`bg-easing-gradient-$easingFunctions\``)
+            throw new Error(`Make sure to set \`bg-gradient-fn-to-$color\` before using \`bg-gradient-fn-$easingFunctions\``)
           }
-          const gradientStops = generateGradientStops(easingFn, steps, fromColor)
+          const gradientStops = generateGradientStops(easingFn, steps, fromColor, toColor)
           return {
             '--un-easing-gradient-stops': gradientStops,
             '--un-easing-gradient': `var(--un-easing-gradient-shape), ${gradientStops}`,
-            'background-color': toColor.color!,
+            // 'background-color': 'var(--un-easing-gradient-to-color)',
           }
         },
       ],
 
       [
-        /^(?:bg-easing-gradient-)?bezier-\[(1|0?(?:\.\d+)?),(1|0?(?:\.\d+)?),(1|0?(?:\.\d+)?),(1|0?(?:\.\d+)?)\]$/,
+        /^(?:bg-gradient-fn-)?bezier-\[(1|0?(?:\.\d+)?),(1|0?(?:\.\d+)?),(1|0?(?:\.\d+)?),(1|0?(?:\.\d+)?)\]$/,
         (matches) => {
           const [x1, y1, x2, y2] = matches.slice(1).map(Number)
           const easingFn = cubicBezier(x1!, y1!, x2!, y2!)
           if (!fromColor) {
-            throw new Error(`Make sure to set \`bg-easing-gradient-from-$color\` before using \`bg-easing-gradient-$easingFunctions\``)
+            throw new Error(`Make sure to set \`bg-gradient-fn-from-$color\` before using \`bg-gradient-fn-$easingFunctions\``)
           }
           if (!toColor) {
-            throw new Error(`Make sure to set \`bg-easing-gradient-to-$color\` before using \`bg-easing-gradient-$easingFunctions\``)
+            throw new Error(`Make sure to set \`bg-gradient-fn-to-$color\` before using \`bg-gradient-fn-$easingFunctions\``)
           }
-          const gradientStops = generateGradientStops(easingFn, steps, fromColor)
+          const gradientStops = generateGradientStops(easingFn, steps, fromColor, toColor)
           return {
             '--un-easing-gradient-stops': gradientStops,
             '--un-easing-gradient': `var(--un-easing-gradient-shape), ${gradientStops}`,
-            'background-color': toColor.color!,
+            'background-color': 'var(--un-easing-gradient-to-color)',
           }
         },
       ],

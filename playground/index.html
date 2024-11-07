@@ -9,13 +9,16 @@
 
   <body>
     <div id="app"></div>
+
     <div
       size-screen
       flex="~ items-center justify-center"
-      bg-easing-gradient="to-l from-#9747FF to-#0582CA steps-20 ease bezier-[0.99,0.01,0.99,0.01]"
-    ></div>
+      bg-gradient-fn="to-l from-#9747FF to-#0582CA steps-2 bezier-[0.01,0.99,0.01,0.99]"
+    >
+      <!-- bg-gradient-fn="to-l from-#9747FF to-#0582CA steps-10 bezier-[0.5,0.75,0.5,0]" -->
+      <h1 text-4xl font-bold>Easing gradients are nice</h1>
+    </div>
 
-    <h1 text-4xl font-bold>Easing gradients are nice</h1>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

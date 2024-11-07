@@ -18,8 +18,8 @@ npm install -D unocss-preset-easing-gradient
 Add the preset to your UnoCSS configuration.
 
 ```ts
-import { presetEasingGradient } from 'unocss-preset-easing-gradient'
 import { defineConfig } from 'unocss'
+import { presetEasingGradient } from 'unocss-preset-easing-gradient'
 
 export default defineConfig({
   presets: [
@@ -35,25 +35,25 @@ export default defineConfig({
 
 To create a gradient with easing, follow these steps:
 
-1. Set the starting color with bg-easing-gradient-from-$color.
-2. Set the ending color with bg-easing-gradient-to-$color.
-3. Choose an easing function by name, like bg-easing-gradient-ease-in-out.
+1. Set the starting color with bg-gradient-fn-from-$color.
+2. Set the ending color with bg-gradient-fn-to-$color.
+3. Choose an easing function by name, like bg-gradient-fn-ease-in-out.
 
 ```html
-<div class="bg-easing-gradient-to-l bg-easing-gradient-from-blue-500 bg-easing-gradient-to-green-400 bg-easing-gradient-ease-in-out">
+<div class="bg-gradient-fn-from-blue-500 bg-gradient-fn-to-l bg-gradient-fn-to-green-400 bg-gradient-fn-ease-in-out">
   <!-- Your content here -->
 </div>
 ```
 
 ### Customizing Gradient Shape
 
-Define the direction or shape of the gradient using bg-easing-gradient-to-{direction} or bg-easing-gradient-shape-{shape}.
+Define the direction or shape of the gradient using bg-gradient-fn-to-{direction} or bg-gradient-fn-shape-{shape}.
 
 - Directions: `t` (top), `r` (right), `b` (bottom), `l` (left)
 - Shape: Use `linear`, `radial`, or `conic` shapes
 
 ```html
-<div class="bg-easing-gradient-from-pink-400 bg-easing-gradient-to-yellow-500 bg-easing-gradient-to-tr">
+<div class="bg-gradient-fn-from-pink-400 bg-gradient-fn-to-yellow-500 bg-gradient-fn-to-tr">
   <!-- Content -->
 </div>
 ```
@@ -63,19 +63,19 @@ Define the direction or shape of the gradient using bg-easing-gradient-to-{direc
 For advanced customization, define custom Bézier curves:
 
 ```html
-<div class="bg-easing-gradient-from-red-400 bg-easing-gradient-to-blue-500 bg-easing-gradient-bezier-[0.42,0,0.58,1]">
+<div class="bg-gradient-fn-from-red-400 bg-gradient-fn-to-blue-500 bg-gradient-fn-bezier-[0.42,0,0.58,1]">
   <!-- Content -->
 </div>
 ```
 
 ## Steps Control
 
-Set the number of steps in the gradient with bg-easing-gradient-steps-{number}. Default is 8.
+Set the number of steps in the gradient with bg-gradient-fn-steps-{number}. Default is 8.
 
 ### Example
 
 ```html
-<div class="bg-easing-gradient-from-indigo-400 bg-easing-gradient-to-purple-500 bg-easing-gradient-steps-12">
+<div class="bg-gradient-fn-from-indigo-400 bg-gradient-fn-to-purple-500 bg-gradient-fn-steps-12">
   <!-- Content -->
 </div>
 ```

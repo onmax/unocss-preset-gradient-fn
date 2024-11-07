@@ -94,8 +94,8 @@ export function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
     return t
   }
 
-  return (t: number) => {
-    const adjustedT = findTForX(t)
-    return bezier(adjustedT, 0, y1, y2, 1) // Calculate y for the corrected t
+  return (x: number) => {
+    const t = findTForX(x)
+    return bezier(t, 0, y1, y2, 1) // Calculate y for the corrected t
   }
 }
