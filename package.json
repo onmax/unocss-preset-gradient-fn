@@ -1,6 +1,6 @@
 {
   "name": "unocss-preset-easing-gradient",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "packageManager": "pnpm@8.5.1",
   "description": "UnoCSS preset to create gradients with easing functions.",
   "author": "onmax",
