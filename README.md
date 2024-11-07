@@ -35,9 +35,9 @@ export default defineConfig({
 
 To create a gradient with easing, follow these steps:
 
-1. Set the starting color with bg-gradient-fn-from-$color.
-2. Set the ending color with bg-gradient-fn-to-$color.
-3. Choose an easing function by name, like bg-gradient-fn-ease-in-out.
+1. Set the starting color with `bg-gradient-fn-from-$color`.
+2. Set the ending color with `bg-gradient-fn-to-$color`.
+3. Choose an easing function by name, like `bg-gradient-fn-ease-in-out`.
 
 ```html
 <div class="bg-gradient-fn-from-blue-500 bg-gradient-fn-to-l bg-gradient-fn-to-green-400 bg-gradient-fn-ease-in-out">
@@ -47,7 +47,7 @@ To create a gradient with easing, follow these steps:
 
 ### Customizing Gradient Shape
 
-Define the direction or shape of the gradient using bg-gradient-fn-to-{direction} or bg-gradient-fn-shape-{shape}.
+Define the direction or shape of the gradient using `bg-gradient-fn-to-{direction}` or `bg-gradient-fn-shape-{shape}`.
 
 - Directions: `t` (top), `r` (right), `b` (bottom), `l` (left)
 - Shape: Use `linear`, `radial`, or `conic` shapes
