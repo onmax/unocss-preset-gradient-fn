@@ -1,16 +1,25 @@
 import type { ParsedColorValue } from '@unocss/rule-utils'
 import type { Preset } from 'unocss'
 import { h, parseColor, positionMap } from '@unocss/preset-mini/utils'
-import { cubicBezier, easingFunctions } from './easing'
+import { cubicBezier, easingFunctions as defaultEasingFunctions } from './easing'
 import { generateGradientStops } from './gradients'
+
+interface PresetEasingGradientOptions {
+  customFunctions?: Record<string, (t: number) => number>
+}
 
 const toKebabCase = (str: string) => str.replace(/([a-z])([A-Z])/g, '$1-$2').replace(/[\s_]+/g, '-').toLowerCase()
 const toCamelCase = (str: string) => str.replace(/[-_](.)/g, (_, char) => char.toUpperCase())
 
-const functionNames = Object.keys(easingFunctions).map(toKebabCase)
-const functionNamesPattern = functionNames.join('|') // Create pattern for regex
 
-export function presetEasingGradient(): Preset {
+export function presetEasingGradient(options: PresetEasingGradientOptions = {}): Preset {
+  const easingFunctions = {
+    ...defaultEasingFunctions,
+    ...(options.customFunctions || {}),
+  }
+  const functionNames = Object.keys(easingFunctions).map(toKebabCase)
+  const functionNamesPattern = functionNames.join('|') // Create pattern for regex
+  
   let fromColor: ParsedColorValue
   let toColor: ParsedColorValue
   let steps = 8
