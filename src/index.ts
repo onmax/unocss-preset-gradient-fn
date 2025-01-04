@@ -69,8 +69,8 @@ export function presetEasingGradient(options: PresetEasingGradientOptions = {}):
         'background-image': `${s}-gradient(var(--un-easing-gradient, var(--un-easing-gradient-stops, rgb(255 255 255 / 0))))`,
       }), { autocomplete: ['bg-gradient-fn-repeating', 'bg-gradient-fn-(linear|radial|conic)', 'bg-gradient-fn-repeating-(linear|radial|conic)'] }],
       [
-        new RegExp(`^(?:bg-gradient-)?fn-(${functionNamesPattern})$`),
-        ([, _functionName]) => {
+        new RegExp(`^(?:bg-gradient-)?fn-(${functionNamesPattern})(?:/(\\d+))?$`),
+        ([, _functionName, lengthValue]) => {
           const functionName = toCamelCase(_functionName!) as keyof typeof easingFunctions
           const easingFn = easingFunctions[functionName]
           if (!fromColor) {
@@ -79,8 +79,10 @@ export function presetEasingGradient(options: PresetEasingGradientOptions = {}):
           if (!toColor) {
             throw new Error(`Make sure to set \`bg-gradient-fn-to-$color\` before using \`bg-gradient-fn-$easingFunctions\``)
           }
-          const gradientStops = generateGradientStops(easingFn, steps, fromColor, toColor)
+          const length = lengthValue ? parseInt(lengthValue, 10) : undefined
+          const gradientStops = generateGradientStops({easingFn, steps, fromColor, toColor, length})
           return {
+            '--un-easing-gradient-length': length ? `${length}px` : undefined,
             '--un-easing-gradient-stops': gradientStops,
             '--un-easing-gradient': `var(--un-easing-gradient-shape), ${gradientStops}`,
             // 'background-color': 'var(--un-easing-gradient-to-color)',
@@ -89,7 +91,7 @@ export function presetEasingGradient(options: PresetEasingGradientOptions = {}):
       ],
 
       [
-        /^(?:bg-gradient-)?fn-bezier-\[(1|0?(?:\.\d+)?),(1|0?(?:\.\d+)?),(1|0?(?:\.\d+)?),(1|0?(?:\.\d+)?)\]$/,
+        new RegExp(`^(?:bg-gradient-)?fn-bezier-\[(1|0?(?:\.\d+)?),(1|0?(?:\.\d+)?),(1|0?(?:\.\d+)?),(1|0?(?:\.\d+)?)\](?:/(\\d+))?$`),
         (matches) => {
           const [x1, y1, x2, y2] = matches.slice(1).map(Number)
           const easingFn = cubicBezier(x1!, y1!, x2!, y2!)
@@ -99,7 +101,8 @@ export function presetEasingGradient(options: PresetEasingGradientOptions = {}):
           if (!toColor) {
             throw new Error(`Make sure to set \`bg-gradient-fn-to-$color\` before using \`bg-gradient-fn-$easingFunctions\``)
           }
-          const gradientStops = generateGradientStops(easingFn, steps, fromColor, toColor)
+          const length = matches[5] ? parseInt(matches[5], 10) : undefined
+          const gradientStops = generateGradientStops({easingFn, steps, fromColor, toColor, length})
           return {
             '--un-easing-gradient-stops': gradientStops,
             '--un-easing-gradient': `var(--un-easing-gradient-shape), ${gradientStops}`,

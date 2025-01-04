@@ -94,20 +94,31 @@ function convertToOKLCH(color: CSSColorValue): CSSColorValue {
   }
 }
 
-export function generateGradientStops(
-  easingFn: (t: number) => number,
-  steps: number,
-  fromColor: ParsedColorValue,
-  toColor: ParsedColorValue,
-) {
+export interface GenerateGradientStopsOptions {
+  steps: number
+  fromColor: ParsedColorValue
+  toColor: ParsedColorValue
+  easingFn: (t: number) => number
+  length?: number
+}
+
+export function generateGradientStops(options: GenerateGradientStopsOptions) {
+  const { steps, fromColor, toColor, easingFn, length } = options
   const stops: string[] = []
 
   for (let i = 0; i <= steps; i++) {
     const t = i / steps
     const easedT = easingFn(t)
     const interpolatedColor = interpolateColor(fromColor, toColor, easedT)
-    const position = `${(t * 100).toFixed(2)}%`
     const colorStr = colorToString(interpolatedColor.cssColor!)
+
+    let position = ''
+    if(length) {
+      position = `calc(${t.toFixed(4)} * var(--un-easing-gradient-length))`
+    } else {
+      position = `${(t * 100).toFixed(2)}%`
+    }
+
     stops.push(`${colorStr} ${position}`)
   }
 
