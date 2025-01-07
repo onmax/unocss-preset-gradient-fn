@@ -11,7 +11,6 @@ interface PresetEasingGradientOptions {
 const toKebabCase = (str: string) => str.replace(/([a-z])([A-Z])/g, '$1-$2').replace(/[\s_]+/g, '-').toLowerCase()
 const toCamelCase = (str: string) => str.replace(/[-_](.)/g, (_, char) => char.toUpperCase())
 
-
 export function presetEasingGradient(options: PresetEasingGradientOptions = {}): Preset {
   const easingFunctions = {
     ...defaultEasingFunctions,
@@ -19,7 +18,7 @@ export function presetEasingGradient(options: PresetEasingGradientOptions = {}):
   }
   const functionNames = Object.keys(easingFunctions).map(toKebabCase)
   const functionNamesPattern = functionNames.join('|') // Create pattern for regex
-  
+
   let fromColor: ParsedColorValue
   let toColor: ParsedColorValue
   let steps = 8
@@ -79,8 +78,8 @@ export function presetEasingGradient(options: PresetEasingGradientOptions = {}):
           if (!toColor) {
             throw new Error(`Make sure to set \`bg-gradient-fn-to-$color\` before using \`bg-gradient-fn-$easingFunctions\``)
           }
-          const length = lengthValue ? parseInt(lengthValue, 10) : undefined
-          const gradientStops = generateGradientStops({easingFn, steps, fromColor, toColor, length})
+          const length = lengthValue ? Number.parseInt(lengthValue, 10) : undefined
+          const gradientStops = generateGradientStops({ easingFn, steps, fromColor, toColor, length })
           return {
             '--un-easing-gradient-length': length ? `${length}px` : undefined,
             '--un-easing-gradient-stops': gradientStops,
@@ -91,7 +90,7 @@ export function presetEasingGradient(options: PresetEasingGradientOptions = {}):
       ],
 
       [
-        new RegExp(`^(?:bg-gradient-)?fn-bezier-\[(1|0?(?:\.\d+)?),(1|0?(?:\.\d+)?),(1|0?(?:\.\d+)?),(1|0?(?:\.\d+)?)\](?:/(\\d+))?$`),
+        /^(?:bg-gradient-)?fn-bezier-[(1|0?:.d+),](?:\/(\d+))?$/,
         (matches) => {
           const [x1, y1, x2, y2] = matches.slice(1).map(Number)
           const easingFn = cubicBezier(x1!, y1!, x2!, y2!)
@@ -101,8 +100,8 @@ export function presetEasingGradient(options: PresetEasingGradientOptions = {}):
           if (!toColor) {
             throw new Error(`Make sure to set \`bg-gradient-fn-to-$color\` before using \`bg-gradient-fn-$easingFunctions\``)
           }
-          const length = matches[5] ? parseInt(matches[5], 10) : undefined
-          const gradientStops = generateGradientStops({easingFn, steps, fromColor, toColor, length})
+          const length = matches[5] ? Number.parseInt(matches[5], 10) : undefined
+          const gradientStops = generateGradientStops({ easingFn, steps, fromColor, toColor, length })
           return {
             '--un-easing-gradient-stops': gradientStops,
             '--un-easing-gradient': `var(--un-easing-gradient-shape), ${gradientStops}`,
