@@ -1,6 +1,6 @@
 {
   "name": "unocss-preset-easing-gradient",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "packageManager": "pnpm@9.12.3",
   "description": "UnoCSS preset to create gradients with easing functions.",
   "author": "onmax",
@@ -69,7 +69,7 @@
     "@unocss/preset-rem-to-px": "^0.65.3",
     "@unocss/reset": "^0.64.0",
     "bumpp": "^9.8.1",
-    "colorjs.io": "^0.5.2",
+    "colorjs.io": "^0.6.0-alpha.1",
     "eslint": "^9.14.0",
     "eslint-plugin-format": "^0.1.2",
     "lint-staged": "^15.2.10",
