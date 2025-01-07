@@ -6,6 +6,7 @@ export default defineBuildConfig({
   clean: true,
   rollup: {
     emitCJS: true,
+    inlineDependencies: true,
   },
   externals: ['unocss'],
 })
