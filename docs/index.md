@@ -3,22 +3,21 @@
 layout: home
 
 hero:
-  name: "UnoCSS Preset Easing Gradient Docs"
-  text: "Docs for the UnoCSS Easing Gradient Docs"
-  tagline: My great project tagline
+  name: "UnoCSS Preset Gradient Fn"
+  text: "Docs for the UnoCSS Gradient Fn"
+  tagline: Create awesome modern gradients
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Getting started
+      link: /getting-started
     - theme: alt
-      text: API Examples
-      link: /api-examples
-
+      text: Playground
+      link: /playground
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: ✨ Gradient Transition
+    details: Out of the box support for smooth color transition
+  - title: 🧮 Easing function
+    details: Define your gradient with an easing function
+  - title: 🤯 Powerful API
+    details: As simple and intuitive as UnoCSS utilities
 ---

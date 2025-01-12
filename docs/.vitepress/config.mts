@@ -1,44 +1,38 @@
-import presetRemToPx from '@unocss/preset-rem-to-px'
-import { presetAttributify, presetUno } from 'unocss'
 import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vitepress'
-import { presetEasingGradient } from '../../src/index'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: 'UnoCSS Preset Easing Gradient Docs',
+  title: 'UnoCSS Gradient Fn',
   description: 'Docs for the UnoCSS Easing Gradient Docs',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' },
+      { text: 'Getting started', link: '/getting-started' },
+      { text: 'Docs', items: [{ text: 'Utilities', link: '/utilities' }, { text: 'FAQ', link: '/faq' }] },
       { text: 'Playground', link: '/playground' },
     ],
 
     sidebar: [
       {
-        text: 'Examples',
+        text: 'Docs',
         items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' },
+          { text: 'Getting started', link: '/getting-started' },
+          { text: 'Utilities', link: '/utilities' },
+          { text: 'FAQ', link: '/faq' },
         ],
       },
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' },
+      { icon: 'github', link: 'https://github.com/onmax/unocss-preset-gradient-fn' },
+      { icon: 'bsky', link: 'https://bsky.app/profile/onmax.bsky.social' },
     ],
   },
   vite: {
     plugins: [
       UnoCSS({
-        presets: [
-          presetUno(),
-          presetAttributify(),
-          presetEasingGradient(),
-          presetRemToPx({ baseFontSize: 4 }),
-        ],
+        configFile: '../../unocss.config.ts',
       }),
     ],
   },
