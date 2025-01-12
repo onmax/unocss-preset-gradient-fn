@@ -1,17 +1,17 @@
 {
-  "name": "unocss-preset-easing-gradient",
-  "version": "1.0.9",
+  "name": "unocss-preset-gradient-fn",
+  "version": "0.0.1-beta-1",
   "packageManager": "pnpm@9.12.3",
   "description": "UnoCSS preset to create gradients with easing functions.",
   "author": "onmax",
   "license": "MIT",
-  "homepage": "https://github.com/onmax/unocss-preset-easing-gradient",
+  "homepage": "https://github.com/onmax/unocss-preset-gradient-fn",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/onmax/unocss-preset-easing-gradient.git"
+    "url": "git+https://github.com/onmax/unocss-preset-gradient-fn.git"
   },
   "bugs": {
-    "url": "https://github.com/onmax/unocss-preset-easing-gradient/issues"
+    "url": "https://github.com/onmax/unocss-preset-gradient-fn/issues"
   },
   "keywords": [
     "unocss",
@@ -41,7 +41,6 @@
   "scripts": {
     "build": "rimraf dist && unbuild",
     "dev": "unbuild --stub",
-    "dev:playground": "pnpm -C ./playground dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepublishOnly": "nr build",
@@ -59,6 +58,7 @@
   "dependencies": {
     "@unocss/preset-mini": "^0.64.0",
     "@unocss/rule-utils": "^0.64.0",
+    "@vueuse/core": "^12.4.0",
     "culori": "^4.0.1"
   },
   "devDependencies": {
