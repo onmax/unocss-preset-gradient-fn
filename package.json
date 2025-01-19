@@ -52,9 +52,6 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
   },
-  "peerDependencies": {
-    "unocss": ">= 0.31.13 < 1"
-  },
   "dependencies": {
     "@unocss/preset-mini": "^0.64.0",
     "@unocss/rule-utils": "^0.64.0",
