@@ -1,3 +1,9 @@
+// ****************** Warning ******************
+//
+// The code of this library has been moved to https://github.com/onmax/unocss-preset-onmax/tree/main/packages/unocss-preset-easing-gradient
+// Please use the new package instead.
+// ***********************************************
+
 import type { Preset } from 'unocss'
 import { theme } from '@unocss/preset-mini/theme'
 import { h, parseColor, positionMap } from '@unocss/preset-mini/utils'

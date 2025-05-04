@@ -8,16 +8,9 @@ hero:
   tagline: Create awesome modern gradients
   actions:
     - theme: brand
-      text: Getting started
-      link: /getting-started
-    - theme: alt
-      text: Playground
-      link: /playground
-features:
-  - title: ✨ Gradient Transition
-    details: Out of the box support for smooth color transition
-  - title: 🧮 Easing function
-    details: Define your gradient with an easing function
-  - title: 🤯 Powerful API
-    details: As simple and intuitive as UnoCSS utilities
+      text: New docs
+      link: https://onmax.github.io/unocss-preset-onmax/unocss-preset-easing-gradient/
 ---
+
+> [!WARNING]
+> The code of this library has been moved out to another repository. Go to the [docs](https://onmax.github.io/unocss-preset-onmax/unocss-preset-easing-gradient/) or [GitHub](https://github.com/onmax/unocss-preset-onmax/tree/main/packages/unocss-preset-easing-gradient/) for more information.
